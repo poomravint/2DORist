@@ -4,9 +4,10 @@ import jwt from "jsonwebtoken";
 import * as UserModel from "../models/user.model";
 
 export const register = async (req: Request, res: Response) => {
-  const { name, email, password } = req.body;
+  const { username, email, password } = req.body;
 
-  if (!name || !email || !password) {
+  if (!username || !email || !password) {
+    console.log(username, email, password);
     const error: any = new Error("All fields are required");
     error.status = 400;
     throw error;
@@ -14,15 +15,15 @@ export const register = async (req: Request, res: Response) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  await UserModel.createUser(name, email, hashedPassword);
+  await UserModel.createUser(username, email, hashedPassword);
 
   res.json({ message: "User registered successfully" });
 };
 
 export const login = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
-  const user: any = await UserModel.findUserByEmail(email);
+  const user: any = await UserModel.findUserByUsername(username);
 
   if (!user) {
     const error: any = new Error("User not found");
@@ -38,11 +39,9 @@ export const login = async (req: Request, res: Response) => {
     throw error;
   }
 
-  const token = jwt.sign(
-    { id: user.id },
-    process.env.JWT_SECRET as string,
-    { expiresIn: "1d" }
-  );
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string, {
+    expiresIn: "1d",
+  });
 
   res.json({ token });
 };

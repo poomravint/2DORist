@@ -6,13 +6,13 @@ export const getAllUsers = async () => {
 };
 
 export const createUser = async (
-  name: string,
+  username: string,
   email: string,
   password: string
 ) => {
   await pool.query(
-    "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-    [name, email, password] // ✅ ต้องเป็น array
+    "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+    [username, email, password] // ✅ ต้องเป็น array
   );
 };
 
@@ -27,7 +27,7 @@ export const deleteUser = async (id: number) => {
 
 export const findUserById = async (id: number) => {
   const [rows]: any = await pool.query(
-    "SELECT id, name, email FROM users WHERE id = ?",
+    "SELECT id, username, email FROM users WHERE id = ?",
     [id]
   );
 
@@ -38,6 +38,15 @@ export const findUserByEmail = async (email: string) => {
   const [rows]: any = await pool.query(
     "SELECT * FROM users WHERE email = ?",
     [email]
+  );
+
+  return rows[0]; // ถ้าไม่เจอจะเป็น undefined
+};
+
+export const findUserByUsername = async (username: string) => {
+  const [rows]: any = await pool.query(
+    "SELECT * FROM users WHERE username = ?",
+    [username]
   );
 
   return rows[0]; // ถ้าไม่เจอจะเป็น undefined

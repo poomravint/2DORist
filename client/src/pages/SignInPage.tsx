@@ -5,13 +5,13 @@ import { authService } from "../services/authService";
 
 const SignInPage: React.FC = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const result = await authService.login({ email, password });
+      const result = await authService.login({ username, password });
       localStorage.setItem("token", result.token); // เก็บ token ไว้ใช้
       alert("Sucess");
       navigate('/profile'); // หรือหน้า Todo ของคุณf
@@ -19,6 +19,13 @@ const SignInPage: React.FC = () => {
       alert("Login Failed");
     }
   };
+
+
+
+
+
+
+
 
   return (
     <div style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}>
@@ -29,8 +36,8 @@ const SignInPage: React.FC = () => {
           <br />
           <input
             type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
             style={{ width: "100%", padding: "8px" }}
           />

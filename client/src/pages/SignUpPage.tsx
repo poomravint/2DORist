@@ -29,7 +29,7 @@ const SignUpPage: React.FC = () => {
   try {
     // ส่ง name, email, password ตามที่ Backend รับใน req.body
     await authService.register({ 
-      name: formData.username, // ใน UI คุณอาจใช้ชื่อตัวแปร username แต่ Backend รับ name
+      username: formData.username, // ใน UI คุณอาจใช้ชื่อตัวแปร username แต่ Backend รับ name
       email: formData.email, 
       password: formData.password 
     });

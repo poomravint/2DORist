@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from '../components/Button';
-import { authService } from '../services/authService';
+// import Button from '../components/Button';
+import Button from '@components/Button';
+import { authService } from '@services/authService';
+// import { authService } from '../services/authService';
 
 const SignUpPage: React.FC = () => {
   const navigate = useNavigate();

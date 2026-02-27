@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authService } from '../services/authService';
-import type { UserProfile } from '../types/auth';
-import Button from '../components/Button';
+import { authService } from '../../services/authService';
+import type { UserProfile } from '../../types/auth';
+import Button from '../../components/Button';
 
 const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const ProfilePage: React.FC = () => {
     const fetchProfile = async () => {
       try {
         setLoading(true);
-        const data = await authService.getProfile();
+        const data = await authService.getProfile(); //! Call API
         setUser(data);
       } catch (err: any) {
         console.error('Failed to fetch profile:', err);
@@ -55,7 +55,7 @@ const ProfilePage: React.FC = () => {
       </div>
 
       <div style={{ marginTop: '20px' }}>
-        <Button label="Go to Todo List" onClick={() => navigate('/todos')} variant="primary" />
+        <Button label="Go to Todo List" onClick={() => navigate('/Userhomepage')} variant="primary" />
         <Button label="Logout" onClick={handleLogout} variant="secondary" />
       </div>
     </div>

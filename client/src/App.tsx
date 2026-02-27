@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import SignInPage from "./pages/SignInPage";
-import SignUpPage from "./pages/SignUpPage";
-import ProfilePage from "./pages/ProfilePage";
+import HomePage from "./pages/Homepage/HomePage";
+import SignInPage from "./pages/SignIn/SignInPage";
+import SignUpPage from "./pages/SignUp/SignUpPage";
+import ProfilePage from "./pages/Profile/ProfilePage";
+import Userhomepage from "./pages/Userhome/Userhomepage";
 
 import GuestRoute from "./components/GuestRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -46,6 +47,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/Userhomepage"
+          element={
+            <ProtectedRoute>
+              <Userhomepage />
             </ProtectedRoute>
           }
         />

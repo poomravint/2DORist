@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../components/Button";
-import { authService } from "../services/authService";
+import Button from "@components/Button";
+import { authService } from "@services/authService";
 
 const SignInPage: React.FC = () => {
   const navigate = useNavigate();

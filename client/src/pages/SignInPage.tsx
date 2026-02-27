@@ -1,58 +1,60 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Button from '../components/Button';
-import { authService } from '../services/authService';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "../components/Button";
+import { authService } from "../services/authService";
 
 const SignInPage: React.FC = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-const handleSignIn = async (e: React.FormEvent) => {
-  e.preventDefault();
-  try {
-    const result = await authService.signIn({ username, password });
-    console.log('Login Success:', result);
-    
-    // เก็บ Token ลง LocalStorage (ตัวอย่างเบื้องต้น)
-    localStorage.setItem('token', result.token);
-    
-    // เมื่อ Login สำเร็จ ให้ส่งไปหน้า Todo List (สมมติว่าคือหน้า /dashboard)
-    navigate('/dashboard'); 
-  } catch (error: any) {
-    alert(error.response?.data?.message || 'Login failed!');
-  }
-};
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const result = await authService.login({ email, password });
+      localStorage.setItem("token", result.token); // เก็บ token ไว้ใช้
+      alert("Sucess");
+      navigate('/profile'); // หรือหน้า Todo ของคุณf
+    } catch (err: any) {
+      alert("Login Failed");
+    }
+  };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>
+    <div style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}>
       <h2>Sign In</h2>
       <form onSubmit={handleSignIn}>
-        <div style={{ marginBottom: '10px' }}>
-          <label>Username:</label><br />
-          <input 
-            type="text" 
-            value={username} 
-            onChange={(e) => setUsername(e.target.value)} 
-            required 
-            style={{ width: '100%', padding: '8px' }}
+        <div style={{ marginBottom: "10px" }}>
+          <label>email:</label>
+          <br />
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            style={{ width: "100%", padding: "8px" }}
           />
         </div>
-        <div style={{ marginBottom: '20px' }}>
-          <label>Password:</label><br />
-          <input 
-            type="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required 
-            style={{ width: '100%', padding: '8px' }}
+        <div style={{ marginBottom: "20px" }}>
+          <label>Password:</label>
+          <br />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            style={{ width: "100%", padding: "8px" }}
           />
         </div>
         <Button label="Login" onClick={() => {}} variant="primary" />
       </form>
 
       <hr />
-      <Button label="Back to Home" onClick={() => navigate('/')} variant="secondary" />
+      <Button
+        label="Back to Home"
+        onClick={() => navigate("/")}
+        variant="secondary"
+      />
     </div>
   );
 };

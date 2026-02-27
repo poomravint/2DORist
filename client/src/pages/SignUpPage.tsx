@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
+import { authService } from '../services/authService';
 
 const SignUpPage: React.FC = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const SignUpPage: React.FC = () => {
 
   const [error, setError] = useState<string>('');
 
-  const handleSignUp = (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
@@ -25,8 +26,18 @@ const SignUpPage: React.FC = () => {
       return;
     }
 
-    console.log('Registering with:', formData);
-    // เพิ่ม Logic การเรียก API เพื่อสมัครสมาชิกที่นี่
+  try {
+    // ส่ง name, email, password ตามที่ Backend รับใน req.body
+    await authService.register({ 
+      name: formData.username, // ใน UI คุณอาจใช้ชื่อตัวแปร username แต่ Backend รับ name
+      email: formData.email, 
+      password: formData.password 
+    });
+    alert("Register Success!");
+    navigate('/signin');
+  } catch (err: any) {
+    alert(err.response?.data?.message || "Error");
+  }
   };
 
   return (

@@ -1,13 +1,16 @@
 import axios from 'axios';
 
-// กำหนด URL ของ Backend (เช่น Express หรือ NestJS ที่คุณจะทำต่อ)
-const API_URL = 'http://localhost:5000/api'; 
-
 const api = axios.create({
-  baseURL: API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: 'http://localhost:5000/', // เช็คให้ตรงกับ port ของ server.ts
+});
+
+// ดึง Token จาก LocalStorage แนบไปกับทุก Request
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 export default api;
